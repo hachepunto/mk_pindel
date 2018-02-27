@@ -1,8 +1,16 @@
 <config.mk
 
-BAMFILE="$(find -L data/ -name "*.bam")"
-SAMPLESIZE="$(find -L data/ -name "*.bam"|wc -l)"
-BAMPATH="$(find -L data/ -name "*.bam" | xargs realpath)"
 
+"results/"$PREFIX"config.txt":	data/%.bam
+	mkdir -p `dirname $target`
+	./bin/makeconfig
 
-find -L data/ -name "*.bam" | xargs realpath | xargs basename | sed -e 's/.bam//g'
+results/%.vcf:	"results/"$PREFIX"config.txt"
+	mkdir -p `dirname $target`
+	pindel \
+		--fasta $REFERENCE \
+		--config-file $prereq \
+		--output-prefix $PREFIX \
+		--chromosome ALL \
+		--number_of_threads $NT \
+		--max_range_index $MAX \
