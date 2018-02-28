@@ -11,3 +11,6 @@ REFERENCE=
 
 # Number of threds
 NT=
+=======
+# Output prefix
+PREFIX="aguas"
