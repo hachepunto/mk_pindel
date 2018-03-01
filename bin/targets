@@ -1,7 +1,10 @@
 #!/bin/bash 
 
-find -L data/ \
-	-name "*.bam" \
-| sed \
-	-e 's#data/#results/#g' \
-	-e 's#\.bam$#.vcf#g'
+source ./config.mk
+
+if ls data/*.bam >/dev/null 2>&1
+then 
+	echo 'results/'$PREFIX'.vcf'
+else
+	echo 'No files found'
+fi

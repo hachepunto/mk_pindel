@@ -2,8 +2,14 @@
 
 source ./config.mk
 
-SAMPLESIZE="$(find -L data/ -name "*.bam"|wc -l)"
-BAMFILE="$(find -L data/ -name "*.bam" | sed -e 's#data/##g' -e 's#.bam##g')"
-BAMPATH="$(find -L data/ -name "*.bam" | xargs realpath)"
-INSCOL="$(for i in `seq $SAMPLESIZE`; do echo "$INSERTSIZE";done)"
-paste -d'\t' <(echo "$BAMPATH")  <(echo "$INSCOL") <(echo "$BAMFILE") > "results/"$PREFIX"config.txt"
+if ls data/*.bam >/dev/null 2>&1
+then {
+		SAMPLESIZE="$(find -L data/ -name "*.bam"|wc -l)"
+		BAMFILE="$(find -L data/ -name "*.bam" | sed -e 's#data/##g' -e 's#.bam##g')"
+		BAMPATH="$(find -L data/ -name "*.bam" | xargs realpath)"
+		INSCOL="$(for i in `seq $SAMPLESIZE`; do echo "$INSERTSIZE";done)"
+		paste -d'\t' <(echo "$BAMPATH")  <(echo "$INSCOL") <(echo "$BAMFILE") > "results/"$PREFIX"_config.txt"
+	}
+else
+	echo 'No files found'
+fi
