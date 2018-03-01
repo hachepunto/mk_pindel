@@ -50,5 +50,5 @@
 		-r $REFERENCE \
 		-R $INFOREF \
 		-d $DATEREF \
-		-v $target'.build'
+		-v $target'.build' \
 	&& mv $target'.build' $target
